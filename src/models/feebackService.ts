@@ -1,29 +1,37 @@
+import mongoose, { Schema, Document } from "mongoose";
 
-import mongoose,{Schema,Document} from "mongoose"
+interface IFeedbackService extends Document {
+    pitchId: mongoose.Schema.Types.ObjectId;
+    clarityScore: number;
+    structureScore: number;
+    relevanceScore: number;
+    persuasivenessScore: number;
+    strengths?: string[];
+    improvements?: string[];
+}
 
-const feedbackService=mongoose.Schema(
+const feedbackServiceSchema = new Schema<IFeedbackService>(
     {
-
-        pitchId:{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:"PitchGenerator",
-            required:true,
+        pitchId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "PitchGenerator",  // Reference to the PitchGenerator model
+            required: true,
         },
-        clarityScore:{
-            types:Number,
-            required:true,
+        clarityScore: {
+            type: Number,
+            required: true,
         },
-        structureScore:{
-            types:Number,
-            required:true,
+        structureScore: {
+            type: Number,
+            required: true,
         },
-        relevanceScore:{
-            types:Number,
-            required:true,
+        relevanceScore: {
+            type: Number,
+            required: true,
         },
-        persuasivenessScore:{
-            types:Number,
-            required:true,
+        persuasivenessScore: {
+            type: Number,
+            required: true,
         },
         strengths: [{
             type: String,
@@ -31,9 +39,8 @@ const feedbackService=mongoose.Schema(
         improvements: [{
             type: String,
         }],
+    },
+    { timestamps: true }
+);
 
-        
-    },{timestamps:true})
-
-
-export default mongoose.models.feedbackService || mongoose.models("feedbackService",feedbackService)
+export default mongoose.models.FeedbackService || mongoose.model<IFeedbackService>("FeedbackService", feedbackServiceSchema);

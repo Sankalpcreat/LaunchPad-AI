@@ -36,4 +36,5 @@ const pitchGeneratorSchema = new Schema<IPitchGenerator>(
     { timestamps: true }
 );
 
-export default mongoose.models.PitchGenerator || mongoose.model<IPitchGenerator>("PitchGenerator",PitchGenerator)
+export default mongoose.models.PitchGenerator || mongoose.model<IPitchGenerator>("PitchGenerator", pitchGeneratorSchema);
+
