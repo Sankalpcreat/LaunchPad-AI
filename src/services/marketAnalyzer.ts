@@ -49,4 +49,4 @@ export const saveMarketAnalysis=async(startupName: string,
     
    }
 
-    }
+}

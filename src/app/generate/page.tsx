@@ -28,7 +28,7 @@ export default function GeneratePitchPage() {
 
       setGeneratedPitch(response.data.pitchText);
     } catch (err) {
-      setError("Failed to generate the pitch. Please try again.");
+      setError("Failed to generate the pitch. Please try again.",err);
     } finally {
       setLoading(false);
     }
