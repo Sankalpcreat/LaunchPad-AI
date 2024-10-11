@@ -14,7 +14,7 @@ const feedbackServiceSchema = new Schema<IFeedbackService>(
     {
         pitchId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "PitchGenerator",  // Reference to the PitchGenerator model
+            ref: "PitchGenerator",  
             required: true,
         },
         clarityScore: {
