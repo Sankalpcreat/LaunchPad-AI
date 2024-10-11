@@ -28,3 +28,25 @@ export const analyzeMarketTrends = async (industry: string) => {
         throw new Error("Failed to fetch market trends");
     }
 }
+
+export const saveMarketAnalysis=async(startupName: string,
+    industry: string,
+    competitor: string[])=>{
+
+   try {
+     const trends= await  analyzeMarketTrends(industry);
+     const marketServices=new MarketServices({
+         startupName,
+         industry,
+         competitor:competitor,
+         marketTrends:trends
+     })
+     await marketServices.save();
+     return marketServices;
+   } catch (error) {
+    console.error("Error saving market analysis",error);
+    throw new Error("Failed to analysis the market")
+    
+   }
+
+    }
