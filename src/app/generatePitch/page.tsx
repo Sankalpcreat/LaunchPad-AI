@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import { useState } from "react";
 import axios from "axios";
 
@@ -18,22 +17,26 @@ export default function GeneratePitchPage() {
     setGeneratedPitch("");
     setError("");
 
-    try {
-      const response = await axios.post("/api/generate", {
-        startupName,
-        missionStatement,
-        productDetails,
-        targetMarket,
-      });
+    const inputData = {
+      startupName,
+      missionStatement,
+      productDetails,
+      targetMarket,
+    };
+    console.log("Submitting input data:", inputData);
 
-      setGeneratedPitch(response.data.pitchText);
+    try {
+      const response = await axios.post("/api/generate", inputData);
+      console.log("API response:", response.data);
+
+      setGeneratedPitch(response.data.pitch.pitchText);
     } catch (err) {
-      setError("Failed to generate the pitch. Please try again.",err);
+      console.error("Error in API call:", err);
+      setError("Failed to generate the pitch. Please try again.");
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <div className="max-w-2xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Generate Your Startup Pitch</h1>

@@ -15,6 +15,14 @@ const MarketInsightsPage = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
+
+    // Basic input validation
+    if (!startupName || !industry || competitors.length === 0) {
+      setError("Please provide a startup name, industry, and at least one competitor.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await axios.post("/api/insights", {
         startupName,
@@ -25,12 +33,11 @@ const MarketInsightsPage = () => {
       setTrends(response.data.trends);
     } catch (error) {
       console.error("Error fetching market insights:", error);
-      setError("Failed to fetch market insights.");
+      setError("Failed to fetch market insights. Please try again later.");
     } finally {
       setLoading(false);
     }
-  }
-
+  };
 
   return (
     <div className="container mx-auto p-6">
@@ -72,7 +79,14 @@ const MarketInsightsPage = () => {
             type="text"
             id="competitors"
             value={competitors.join(", ")}
-            onChange={(e) => setCompetitors(e.target.value.split(","))}
+            onChange={(e) =>
+              setCompetitors(
+                e.target.value
+                  .split(",")
+                  .map((item) => item.trim())
+                  .filter((item) => item.length > 0)
+              )
+            }
             className="w-full p-2 border border-gray-300 rounded-md"
           />
         </div>
@@ -80,12 +94,11 @@ const MarketInsightsPage = () => {
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded-md font-medium hover:bg-blue-700"
+          disabled={loading}
         >
-          Analyze Market
+          {loading ? "Analyzing..." : "Analyze Market"}
         </button>
       </form>
-
-      {loading && <p className="mt-4 text-blue-600">Analyzing market trends...</p>}
 
       {error && <p className="mt-4 text-red-600">{error}</p>}
 
@@ -96,8 +109,15 @@ const MarketInsightsPage = () => {
             {trends.map((trend, index) => (
               <li key={index} className="border p-4 rounded-md">
                 <h3 className="font-medium text-lg">{trend.title}</h3>
-                <p className="text-gray-600">{trend.source} - {new Date(trend.publishedAt).toLocaleDateString()}</p>
-                <a href={trend.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+                <p className="text-gray-600">
+                  {trend.source} - {new Date(trend.publishedAt).toLocaleDateString()}
+                </p>
+                <a
+                  href={trend.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline"
+                >
                   Read more
                 </a>
               </li>
