@@ -1,21 +1,30 @@
-"use client"
-import { useState } from "react";
-import axios from "axios";
+'use client';
+
+import { useState } from 'react';
+import axios from 'axios';
+import Button from '@/components/ui/button';
+import Input from '@/components/ui/input';
+import Textarea from '@/components/ui/textarea';
+import Label from '@/components/ui/label';
+import Card, { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
+import Alert, { AlertDescription, AlertTitle } from '@/components/ui/alert';
+
+import { Loader2, AlertCircle } from 'lucide-react';
 
 export default function GeneratePitchPage() {
-  const [startupName, setStartupName] = useState("");
-  const [missionStatement, setMissionStatement] = useState("");
-  const [productDetails, setProductDetails] = useState("");
-  const [targetMarket, setTargetMarket] = useState("");
-  const [generatedPitch, setGeneratedPitch] = useState("");
+  const [startupName, setStartupName] = useState('');
+  const [missionStatement, setMissionStatement] = useState('');
+  const [productDetails, setProductDetails] = useState('');
+  const [targetMarket, setTargetMarket] = useState('');
+  const [generatedPitch, setGeneratedPitch] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setGeneratedPitch("");
-    setError("");
+    setGeneratedPitch('');
+    setError('');
 
     const inputData = {
       startupName,
@@ -23,83 +32,106 @@ export default function GeneratePitchPage() {
       productDetails,
       targetMarket,
     };
-    console.log("Submitting input data:", inputData);
+    console.log('Submitting input data:', inputData);
 
     try {
-      const response = await axios.post("/api/generate", inputData);
-      console.log("API response:", response.data);
+      const response = await axios.post('/api/generate', inputData);
+      console.log('API response:', response.data);
 
       setGeneratedPitch(response.data.pitch.pitchText);
     } catch (err) {
-      console.error("Error in API call:", err);
-      setError("Failed to generate the pitch. Please try again.");
+      console.error('Error in API call:', err);
+      setError('Failed to generate the pitch. Please try again.');
     } finally {
       setLoading(false);
     }
   };
+
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Generate Your Startup Pitch</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium">Startup Name</label>
-          <input
-            type="text"
-            value={startupName}
-            onChange={(e) => setStartupName(e.target.value)}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
+    <div className="container mx-auto py-8">
+      <Card className="max-w-2xl mx-auto">
+        <CardHeader>
+          <CardTitle>Generate Your Startup Pitch</CardTitle>
+          <CardDescription>Fill in the details below to create a compelling pitch for your startup.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="startupName">Startup Name</Label>
+              <Input
+                id="startupName"
+                value={startupName}
+                onChange={(e) => setStartupName(e.target.value)}
+                placeholder="Enter your startup name"
+                required
+              />
+            </div>
 
-        <div>
-          <label className="block text-sm font-medium">Mission Statement</label>
-          <textarea
-            value={missionStatement}
-            onChange={(e) => setMissionStatement(e.target.value)}
-            className="w-full p-2 border rounded"
-            rows={3}
-            required
-          />
-        </div>
+            <div className="space-y-2">
+              <Label htmlFor="missionStatement">Mission Statement</Label>
+              <Textarea
+                id="missionStatement"
+                value={missionStatement}
+                onChange={(e) => setMissionStatement(e.target.value)}
+                placeholder="Describe your startup's mission"
+                required
+              />
+            </div>
 
-        <div>
-          <label className="block text-sm font-medium">Product Details</label>
-          <textarea
-            value={productDetails}
-            onChange={(e) => setProductDetails(e.target.value)}
-            className="w-full p-2 border rounded"
-            rows={3}
-            required
-          />
-        </div>
+            <div className="space-y-2">
+              <Label htmlFor="productDetails">Product Details</Label>
+              <Textarea
+                id="productDetails"
+                value={productDetails}
+                onChange={(e) => setProductDetails(e.target.value)}
+                placeholder="Describe your product or service"
+                required
+              />
+            </div>
 
-        <div>
-          <label className="block text-sm font-medium">Target Market (Optional)</label>
-          <input
-            type="text"
-            value={targetMarket}
-            onChange={(e) => setTargetMarket(e.target.value)}
-            className="w-full p-2 border rounded"
-          />
-        </div>
+            <div className="space-y-2">
+              <Label htmlFor="targetMarket">Target Market (Optional)</Label>
+              <Input
+                id="targetMarket"
+                value={targetMarket}
+                onChange={(e) => setTargetMarket(e.target.value)}
+                placeholder="Describe your target audience"
+              />
+            </div>
+          </form>
+        </CardContent>
+        <CardFooter>
+          <Button onClick={handleSubmit} disabled={loading} className="w-full">
+            {loading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Generating...
+              </>
+            ) : (
+              'Generate Pitch'
+            )}
+          </Button>
+        </CardFooter>
+      </Card>
 
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-600 text-white rounded"
-          disabled={loading}
-        >
-          {loading ? "Generating..." : "Generate Pitch"}
-        </button>
-      </form>
-
-      {error && <p className="text-red-500 mt-4">{error}</p>}
+      {error && (
+        <Alert variant="destructive" className="mt-4">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
 
       {generatedPitch && (
-        <div className="mt-6">
-          <h2 className="text-xl font-bold">Generated Pitch</h2>
-          <p className="mt-2 p-4 border rounded bg-gray-50">{generatedPitch}</p>
-        </div>
+        <Card className="mt-8">
+          <CardHeader>
+            <CardTitle>Generated Pitch</CardTitle>
+            <CardDescription>Here's your AI-generated startup pitch:</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground whitespace-pre-wrap">{generatedPitch}</p>
+          </CardContent>
+        </Card>
       )}
     </div>
   );
