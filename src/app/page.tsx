@@ -8,8 +8,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { ArrowUpRight, Upload, Wand2, Rocket } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 import { motion } from "framer-motion"
+import { GridPatternDemo } from "@/components/GridPatter"
+
+
+import BoxReveal from "@/components/ui/box-reveal"
+import { MarqueeSection } from "@/components/MarqueeSection"; 
+
+
 import Footer from '@/components/ui/Footer'
 
 const fadeIn = {
@@ -28,6 +35,7 @@ const staggerChildren = {
 
 export default function LandingPage() {
   return (
+   
     <div className="min-h-screen bg-black text-white">
       {/* Header */}
       <motion.header
@@ -70,15 +78,21 @@ export default function LandingPage() {
         variants={staggerChildren}
       >
         <div className="max-w-2xl">
-          <motion.h1 className="text-5xl font-bold mb-4" variants={fadeIn}>
-            Your AI-Powered
-            <br />
-            <span className="text-purple-500">Design</span> Assistant
-          </motion.h1>
-          <motion.p className="text-xl mb-6" variants={fadeIn}>
-            Unlock your creative potential. Seamlessly generate, customize, and perfect your designs with cutting-edge AI
-            technology.
-          </motion.p>
+        <BoxReveal boxColor={"#7C3AED"} duration={0.5}>
+  <motion.h1 className="text-5xl font-bold mb-4" variants={fadeIn}>
+    Your AI-Powered
+    <br />
+    <span className="text-purple-500">Design</span> Assistant
+  </motion.h1>
+</BoxReveal>
+
+<BoxReveal boxColor={"#7C3AED"} duration={0.5}>
+  <motion.p className="text-xl mb-6" variants={fadeIn}>
+    Unlock your creative potential. Seamlessly generate, customize, and perfect your designs with cutting-edge AI
+    technology.
+  </motion.p>
+</BoxReveal>
+
           <motion.div variants={fadeIn}>
             <Button className="bg-purple-600 hover:bg-purple-700">Get Started</Button>
             <Button variant="outline" className="ml-4">
@@ -92,58 +106,14 @@ export default function LandingPage() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
+              
+
           <div className="w-full h-64 bg-purple-500 rounded-lg"></div>
         </motion.div>
       </motion.section>
 
       {/* Unleash Your Creativity Section */}
-      <section className="p-12 bg-zinc-900">
-        <motion.h2
-          className="text-4xl font-bold mb-4"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          Unleash Your Creativity
-        </motion.h2>
-        <motion.p
-          className="text-xl mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
-        >
-          Discover how our AI-Powered Design Assistant transforms your ideas into stunning designs effortlessly. Follow
-          these simple steps to turn your vision into reality.
-        </motion.p>
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          variants={staggerChildren}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-        >
-          {[
-            { icon: <Upload className="w-6 h-6" />, title: "Upload Brief", description: "Share your project details and let our AI grasp your vision." },
-            { icon: <Wand2 className="w-6 h-6" />, title: "Generate Designs", description: "Watch as our AI crafts unique design ideas tailored to you." },
-            { icon: <Rocket className="w-6 h-6" />, title: "Refine Creation", description: "Perfect your chosen concept with easy-to-use AI tools." }
-          ].map((item, index) => (
-            <motion.div key={index} variants={fadeIn}>
-              <Card className="bg-zinc-800 border-none">
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mb-4">
-                    {item.icon}
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                  <p className="text-zinc-400">{item.description}</p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
-
+      <MarqueeSection />
       {/* Transforming Imagination Section */}
       <section className="p-12">
         <motion.h2
@@ -245,5 +215,6 @@ export default function LandingPage() {
       {/* Footer */}
       <Footer />
     </div>
+
   )
 }
