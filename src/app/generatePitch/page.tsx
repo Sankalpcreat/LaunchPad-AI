@@ -47,6 +47,18 @@ export default function GeneratePitchPage() {
     }
   };
 
+  const handleDownloadText = () => {
+    if (!generatedPitch) return; // Do nothing if there's no pitch
+
+    const element = document.createElement('a');
+    const file = new Blob([generatedPitch], { type: 'text/plain' });
+    element.href = URL.createObjectURL(file);
+    element.download = 'generated_pitch.txt'; // File name for the download
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
+
   return (
     <div className="container mx-auto py-8">
       <Card className="max-w-2xl mx-auto">
@@ -100,7 +112,7 @@ export default function GeneratePitchPage() {
             </div>
           </form>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="flex space-x-2">
           <Button onClick={handleSubmit} disabled={loading} className="w-full">
             {loading ? (
               <>
@@ -111,6 +123,13 @@ export default function GeneratePitchPage() {
               'Generate Pitch'
             )}
           </Button>
+
+          {/* Download Text Button */}
+          {generatedPitch && (
+            <Button onClick={handleDownloadText} className="w-full">
+              Download Pitch as Text
+            </Button>
+          )}
         </CardFooter>
       </Card>
 
