@@ -2,11 +2,16 @@
 
 import { Button } from "@/components/ui/Button1"
 import { Card, CardContent } from "@/components/ui/Card1"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 import { ArrowUpRight, Upload, Wand2, Rocket } from "lucide-react"
 import { motion } from "framer-motion"
-import Image from 'next/image';
+import Footer from '@/components/ui/Footer'
 
-// Animations for framer-motion
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -24,7 +29,6 @@ const staggerChildren = {
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-black text-white">
-      
       {/* Header */}
       <motion.header
         className="flex justify-between items-center p-6"
@@ -88,13 +92,7 @@ export default function LandingPage() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <Image
-            src="/image.jpg" // Add your image path here
-            alt="A sleek, futuristic workspace featuring a designer" // Add appropriate alt text
-            className="rounded-lg"
-            width={500} // Adjust width as needed
-            height={400} // Adjust height as needed
-          />
+          <div className="w-full h-64 bg-purple-500 rounded-lg"></div>
         </motion.div>
       </motion.section>
 
@@ -196,40 +194,56 @@ export default function LandingPage() {
         </motion.div>
       </section>
 
-      {/* High-Resolution Outputs Section */}
+      {/* Seamless Tool Integration Section */}
       <section className="p-12 bg-zinc-900">
-        <div className="flex justify-between items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl font-bold mb-4">High-Resolution Outputs</h2>
-            <p className="text-xl mb-8">
-              Download your final designs in stunning high resolution, ready for immediate use in your projects. Say
-              goodbye to pixelation and hello to crisp, professional-grade visuals.
-            </p>
-            <Button className="bg-purple-600 hover:bg-purple-700">Start Designing Now</Button>
-          </motion.div>
-          <motion.div
-            className="w-1/3"
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true }}
-          >
-            <Image
-              src="/image.jpg" // Add your image path here
-              alt="High-resolution design outputs" // Add appropriate alt text
-              className="rounded-lg"
-              width={500} // Adjust width as needed
-              height={400} // Adjust height as needed
-            />
-          </motion.div>
-        </div>
+        <motion.h2
+          className="text-4xl font-bold mb-4"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          Seamless Tool Integration
+        </motion.h2>
+        <motion.p
+          className="text-xl mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
+          NajmAI effortlessly integrates with various design tools, ensuring a smooth workflow. Your creative process is
+          enhanced, allowing you to focus on what you do best: creating!
+        </motion.p>
       </section>
 
+      {/* FAQs Section */}
+      <section className="p-12">
+        <motion.h2
+          className="text-4xl font-bold mb-4"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          Frequently Asked Questions
+        </motion.h2>
+        <Accordion type="single" collapsible>
+          {[
+            { question: "How does NajmAI work?", answer: "NajmAI utilizes advanced AI algorithms to generate unique design ideas based on your input." },
+            { question: "Is there a learning curve?", answer: "No! NajmAI is designed to be user-friendly, making it easy for anyone to start creating." },
+            { question: "Can I use my designs commercially?", answer: "Absolutely! You own the rights to all designs generated using NajmAI." }
+          ].map((item, index) => (
+            <AccordionItem key={index}>
+              <AccordionTrigger className="text-xl">{item.question}</AccordionTrigger>
+              <AccordionContent className="text-zinc-400">{item.answer}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </section>
+
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }
