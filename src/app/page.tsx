@@ -2,22 +2,21 @@
 
 import { Button } from "@/components/ui/Button1"
 import { Card, CardContent } from "@/components/ui/Card1"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
+
 import { ArrowUpRight } from "lucide-react"
 import { motion } from "framer-motion"
-import { GridPatternDemo } from "@/components/GridPatter"
 
+import FAQ from "@/components/FAQ";
+import { useRouter } from "next/navigation"
+import Footer from "@/components/ui/Footer"
+import Image from "next/image"; 
+import { AnimatedBeamMultipleOutputDemo } from "@/components/animatedBeam" 
+ 
 
 import BoxReveal from "@/components/ui/box-reveal"
 import { MarqueeSection } from "@/components/MarqueeSection"; 
 
 
-import Footer from '@/components/ui/Footer'
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -34,6 +33,10 @@ const staggerChildren = {
 }
 
 export default function LandingPage() {
+  const router=useRouter();
+  const handleClick=()=>{
+    router.push("/generatePitch");
+  }
   return (
    
     <div className="min-h-screen bg-black text-white">
@@ -46,7 +49,7 @@ export default function LandingPage() {
       >
         <div className="flex items-center space-x-2">
           <div className="w-8 h-8 bg-purple-600 rounded-md"></div>
-          <span className="text-xl font-bold">NajmAI</span>
+          <span className="text-xl font-bold">LaunchPad AI</span>
         </div>
         <nav>
           <Button variant="ghost">More Templates</Button>
@@ -94,10 +97,8 @@ export default function LandingPage() {
 </BoxReveal>
 
           <motion.div variants={fadeIn}>
-            <Button className="bg-purple-600 hover:bg-purple-700">Get Started</Button>
-            <Button variant="outline" className="ml-4">
-              More Templates
-            </Button>
+            <Button className="bg-purple-600 hover:bg-purple-700" onClick={handleClick}>Get Started</Button>
+           
           </motion.div>
         </div>
         <motion.div
@@ -108,12 +109,23 @@ export default function LandingPage() {
         >
               
 
-          <div className="w-full h-64 bg-purple-500 rounded-lg"></div>
+              <div className="w-full h-80 relative">
+          <Image
+            src="/image.jpeg" // Replace with your image path
+            alt="AI Design Assistant"
+            layout="fill" // This will make the image cover the parent div
+            
+            
+            objectFit="cover" // Cover the entire area
+            className="rounded-lg transition-transform duration-500 hover:scale-105" // Adding hover scale animation
+          />
+        </div>
+
         </motion.div>
       </motion.section>
 
       {/* Unleash Your Creativity Section */}
-      <MarqueeSection />
+     
       {/* Transforming Imagination Section */}
       <section className="p-12">
         <motion.h2
@@ -138,6 +150,7 @@ export default function LandingPage() {
           design, from futuristic visuals to timeless craftsmanship, and witness how AI can turn your wildest ideas into
           stunning realities.
         </motion.p>
+     
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 gap-8"
           variants={staggerChildren}
@@ -162,55 +175,41 @@ export default function LandingPage() {
             </motion.div>
           ))}
         </motion.div>
+        
       </section>
+
+      <MarqueeSection />
 
       {/* Seamless Tool Integration Section */}
-      <section className="p-12 bg-zinc-900">
-        <motion.h2
-          className="text-4xl font-bold mb-4"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          Seamless Tool Integration
-        </motion.h2>
-        <motion.p
-          className="text-xl mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
-        >
-          NajmAI effortlessly integrates with various design tools, ensuring a smooth workflow. Your creative process is
-          enhanced, allowing you to focus on what you do best: creating!
-        </motion.p>
-      </section>
-
+      <section className="p-12 bg-black flex items-center justify-center">
+  <div className="max-w-2xl text-center">
+    <motion.h2
+      className="text-4xl font-bold mb-4"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+    >
+      Seamless Tool Integration
+    </motion.h2>
+    <motion.p
+      className="text-xl mb-8"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+      viewport={{ once: true }}
+    >
+      LaunchPad AI effortlessly integrates with various design tools, ensuring a smooth workflow. Your creative process is
+      enhanced, allowing you to focus on what you do best: creating!
+    </motion.p>
+  </div>
+  
+  <div className="flex-grow flex items-start justify-end">
+    <AnimatedBeamMultipleOutputDemo className="bg-black" />
+  </div>
+</section>
       {/* FAQs Section */}
-      <section className="p-12">
-        <motion.h2
-          className="text-4xl font-bold mb-4"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          Frequently Asked Questions
-        </motion.h2>
-        <Accordion type="single" collapsible>
-          {[
-            { question: "How does NajmAI work?", answer: "NajmAI utilizes advanced AI algorithms to generate unique design ideas based on your input." },
-            { question: "Is there a learning curve?", answer: "No! NajmAI is designed to be user-friendly, making it easy for anyone to start creating." },
-            { question: "Can I use my designs commercially?", answer: "Absolutely! You own the rights to all designs generated using NajmAI." }
-          ].map((item, index) => (
-            <AccordionItem key={index}>
-              <AccordionTrigger className="text-xl">{item.question}</AccordionTrigger>
-              <AccordionContent className="text-zinc-400">{item.answer}</AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-      </section>
+     <FAQ/>
 
       {/* Footer */}
       <Footer />
