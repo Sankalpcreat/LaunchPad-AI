@@ -15,6 +15,7 @@ import { AnimatedBeamMultipleOutputDemo } from "@/components/animatedBeam"
 
 import BoxReveal from "@/components/ui/box-reveal"
 import { MarqueeSection } from "@/components/MarqueeSection"; 
+import {FloatingNav} from "@/components/ui/floating-navbar"; 
 
 
 
@@ -42,36 +43,34 @@ export default function LandingPage() {
     <div className="min-h-screen bg-black text-white">
       {/* Header */}
       <motion.header
-        className="flex justify-between items-center p-6"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-purple-600 rounded-md"></div>
-          <span className="text-xl font-bold">LaunchPad AI</span>
-        </div>
-        <nav>
-          <Button variant="ghost">More Templates</Button>
-          <Button variant="ghost" className="ml-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="4" x2="20" y1="12" y2="12" />
-              <line x1="4" x2="20" y1="6" y2="6" />
-              <line x1="4" x2="20" y1="18" y2="18" />
-            </svg>
-          </Button>
-        </nav>
-      </motion.header>
+  className="flex justify-between items-center p-4" // Reduced padding from p-6 to p-4
+  initial={{ opacity: 0, y: -20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5 }}
+>
+  <div className="flex items-center space-x-2">
+    <Image
+      src="/logo1.png" // Path to your image
+      alt="LaunchPad AI Logo"
+      width={40} // Adjust values
+      height={32} // Adjust values
+      className="rounded-md"
+    />
+    <span className="text-xl font-bold">LaunchPad AI</span>
+  </div>
+
+  {/* Floating Navbar Component */}
+  <FloatingNav
+    navItems={[
+      { name: "Home", link: "/" },
+      { name: "Features", link: "/features" },
+      { name: "About", link: "/about" },
+    ]}
+  />
+
+  
+</motion.header>
+
 
       {/* Hero Section */}
       <motion.section
@@ -110,15 +109,13 @@ export default function LandingPage() {
               
 
               <div className="w-full h-80 relative">
-          <Image
-            src="/image.jpeg" // Replace with your image path
-            alt="AI Design Assistant"
-            layout="fill" // This will make the image cover the parent div
-            
-            
-            objectFit="cover" // Cover the entire area
-            className="rounded-lg transition-transform duration-500 hover:scale-105" // Adding hover scale animation
-          />
+              <Image
+  src="/image.jpeg" // Replace with your image path
+  alt="AI Design Assistant"
+  fill // Replaces layout="fill"
+  style={{ objectFit: 'cover' }} // Replaces objectFit="cover"
+  className="rounded-lg transition-transform duration-500 hover:scale-105" // Adding hover scale animation
+/>
         </div>
 
         </motion.div>

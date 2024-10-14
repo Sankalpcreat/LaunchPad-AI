@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button2"
 import { Input } from "@/components/ui/input1"
 import { motion } from "framer-motion"
 import { Facebook, Twitter, Instagram, Linkedin, Github } from "lucide-react"
+import Image from "next/image"
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -30,7 +31,13 @@ export default function Footer() {  // This is a default export
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
         <motion.div variants={fadeInUp} className="space-y-4">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-purple-600 rounded-md"></div>
+          <Image
+      src="/logo1.png"  // Path to your image
+      alt="LaunchPad AI Logo"
+      width={40}  // You can adjust these values
+      height={32}  // to the desired size
+      className="rounded-md"
+    />
             <span className="text-xl font-bold">LaunchpadAI</span>
           </div>
           <p className="text-zinc-300">
@@ -77,7 +84,7 @@ export default function Footer() {  // This is a default export
       </div>
       <motion.div 
         variants={fadeInUp}
-        className="mt-12 pt-8 border-t border-zinc-800 text-center text-zinc-400 text-sm"
+        className="mt-1 pt-8 border-t border-zinc-800 text-center text-zinc-400 text-sm"
       >
         <p>© 2024 LaunchpadAI. All rights reserved.</p>
         <p className="mt-2">Made with ❤️ by the LaunchpadAI team</p>
