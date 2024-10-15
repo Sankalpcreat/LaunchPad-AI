@@ -1,5 +1,10 @@
 import mongoose, { Schema, Document } from "mongoose";
 
+interface IMarketData{
+  labels:string[],
+  values:number[],
+}
+
 interface IPitchGenerator extends Document {
   startupName: string;
   missionStatement: string;
@@ -7,6 +12,7 @@ interface IPitchGenerator extends Document {
   targetMarket?: string;
   pitchText?: string;
   pitchType?: string;
+  marketData?:IMarketData;
 }
 
 const pitchGeneratorSchema = new Schema<IPitchGenerator>(
@@ -17,8 +23,13 @@ const pitchGeneratorSchema = new Schema<IPitchGenerator>(
     targetMarket: { type: String },
     pitchText: { type: String },
     pitchType: { type: String },
+    marketData: {
+      labels: [String],
+      values: [Number],
+    },
   },
   { timestamps: true }
 );
+
 
 export default mongoose.models.PitchGenerator || mongoose.model<IPitchGenerator>("PitchGenerator", pitchGeneratorSchema);

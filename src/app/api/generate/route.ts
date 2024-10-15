@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   
 
     return NextResponse.json(
-      { message: "Pitch Generated Successfully", pitch },
+      { message: "Pitch Generated Successfully", pitch , marketData: pitch.marketData},
       { status: 201 }
     );
   } catch (error) {

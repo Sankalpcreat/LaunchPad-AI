@@ -10,6 +10,10 @@ import Card, { CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import Alert, { AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 import { Loader2, AlertCircle } from 'lucide-react';
+import BarChart from '@/components/BarChart'
+import PieChart from '@/components/PieChart'
+import LineChart from '@/components/LineChart'
+import RadarChart from '@/components/RadarChart'
 
 export default function GeneratePitchPage() {
   const [startupName, setStartupName] = useState('');
@@ -17,6 +21,7 @@ export default function GeneratePitchPage() {
   const [productDetails, setProductDetails] = useState('');
   const [targetMarket, setTargetMarket] = useState('');
   const [generatedPitch, setGeneratedPitch] = useState('');
+  const [marketData, setMarketData] = useState({ labels: [], values: [] });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -39,6 +44,7 @@ export default function GeneratePitchPage() {
       console.log('API response:', response.data);
 
       setGeneratedPitch(response.data.pitch.pitchText);
+      setMarketData(response.data.pitch.marketData);
     } catch (err) {
       console.error('Error in API call:', err);
       setError('Failed to generate the pitch. Please try again.');
@@ -145,12 +151,28 @@ export default function GeneratePitchPage() {
         <Card className="mt-8">
           <CardHeader>
             <CardTitle>Generated Pitch</CardTitle>
-            <CardDescription>Here's your AI-generated startup pitch:</CardDescription>
+            <CardDescription>Here is your AI-generated startup pitch:</CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground whitespace-pre-wrap">{generatedPitch}</p>
           </CardContent>
         </Card>
+      )}
+      {marketData.labels.length>0 && (
+        <div className='mt-8'>
+          <Card>
+            <CardHeader>
+              <CardTitle>Market Data</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <BarChart data={marketData}/>
+              <PieChart data={marketData}/>
+              <LineChart data={marketData}/>
+              <RadarChart data={marketData}/>
+
+            </CardContent>
+          </Card>
+        </div>
       )}
     </div>
   );
