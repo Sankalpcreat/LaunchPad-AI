@@ -2,23 +2,23 @@ import connectDB from "@/utils/connectDB";
 import { OpenAI } from "openai";
 import PitchGenerator from "@/models/PitchGenerator";
 
-// Initialize OpenAI with API Key from environment variables
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// Function to generate the pitch
+
 const generatePitch = async (input: {
   startupName: string;
   missionStatement: string;
   productDetails: string;
   targetMarket?: string;
 }) => {
-  // Connect to the database
+  
   await connectDB(); 
 
   try {
-    // Define the prompt for generating the pitch
+
     const prompt = `
     Please generate a comprehensive startup pitch based on the following information:
 
@@ -52,7 +52,7 @@ const generatePitch = async (input: {
       "SOM": "SOM value"
     }
     `;
-    console.log("Generating pitch with input:", input);
+   
 
     // Make the request to the OpenAI API
     const response = await openai.chat.completions.create({
@@ -65,7 +65,7 @@ const generatePitch = async (input: {
       ],
     });
 
-    // Get the pitch text
+
     const generatedPitch = response.choices[0].message.content.trim();
 
     // Extract TAM, SAM, and SOM from the AI response
@@ -93,10 +93,10 @@ const generatePitch = async (input: {
   }
 };
 
-// Helper function to extract TAM, SAM, and SOM from pitch text
+
 // Helper function to extract TAM, SAM, and SOM from pitch text
 function extractMarketData(pitchText: string): { labels: string[], values: number[] } {
-  console.log("Extracting market data from pitch text:", pitchText); // Log the generated pitch text
+  console.log("Extracting market data from pitch text:", pitchText); 
 
   // Extract the JSON part from the pitch text
   const jsonMatch = pitchText.match(/({.*?})/s);

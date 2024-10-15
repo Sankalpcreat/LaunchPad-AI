@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const CustomLineChart = ({ data }) => {
   const chartData = data.labels.map((label, index) => ({
@@ -9,14 +8,22 @@ const CustomLineChart = ({ data }) => {
   }));
 
   return (
-    <LineChart width={600} height={300} data={chartData}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      <Line type="monotone" dataKey="value" stroke="#82ca9d" activeDot={{ r: 8 }} />
-    </LineChart>
+    <ResponsiveContainer width="100%" height={300}>
+      <LineChart data={chartData}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip contentStyle={{ backgroundColor: '#222', border: 'none', color: '#fff' }} />
+        <Legend />
+        <Line type="monotone" dataKey="value" stroke="url(#colorLine)" strokeWidth={2} dot={false} />
+        <defs>
+          <linearGradient id="colorLine" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+            <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+          </linearGradient>
+        </defs>
+      </LineChart>
+    </ResponsiveContainer>
   );
 };
 

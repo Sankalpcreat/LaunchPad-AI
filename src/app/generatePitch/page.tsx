@@ -119,23 +119,23 @@ export default function GeneratePitchPage() {
           </form>
         </CardContent>
         <CardFooter className="flex space-x-2">
-          <Button onClick={handleSubmit} disabled={loading} className="w-full">
-            {loading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Generating...
-              </>
-            ) : (
-              'Generate Pitch'
-            )}
-          </Button>
+        <Button 
+  onClick={handleSubmit} 
+  disabled={loading} 
+  className={`w-full px-4 py-2 text-lg font-semibold text-white rounded-lg 
+  ${loading ? 'bg-gray-700' : 'bg-gradient-to-r from-black to-gray-900'} 
+  hover:bg-gray-800 focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all ease-in-out duration-300`}
+>
+  {loading ? (
+    <>
+      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+      Generating...
+    </>
+  ) : (
+    'Generate Pitch'
+  )}
+</Button>
 
-          {/* Download Text Button */}
-          {generatedPitch && (
-            <Button onClick={handleDownloadText} className="w-full">
-              Download Pitch as Text
-            </Button>
-          )}
         </CardFooter>
       </Card>
 
@@ -147,33 +147,53 @@ export default function GeneratePitchPage() {
         </Alert>
       )}
 
-      {generatedPitch && (
-        <Card className="mt-8">
-          <CardHeader>
-            <CardTitle>Generated Pitch</CardTitle>
-            <CardDescription>Here is your AI-generated startup pitch:</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground whitespace-pre-wrap">{generatedPitch}</p>
-          </CardContent>
-        </Card>
-      )}
-      {marketData.labels.length>0 && (
-        <div className='mt-8'>
-          <Card>
-            <CardHeader>
-              <CardTitle>Market Data</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <BarChart data={marketData}/>
-              <PieChart data={marketData}/>
-              <LineChart data={marketData}/>
-              <RadarChart data={marketData}/>
+{generatedPitch && (
+  <Card className="mt-8 bg-gray-800 text-white">
+  <CardHeader className="flex justify-between items-center">
+    <div className="flex items-center space-x-4">
+      <CardTitle>Generated Pitch</CardTitle>
+      <Button 
+        onClick={handleDownloadText} 
+        className="bg-black text-white hover:bg-gray-800 px-4 py-1 text-sm"
+      >
+        Download
+      </Button>
+    </div>
+  </CardHeader>
+  <CardContent className="p-4 bg-gray-800 rounded-lg">
+    <p className="text-base text-white whitespace-pre-wrap">{generatedPitch}</p>
+  </CardContent>
+</Card>
 
-            </CardContent>
-          </Card>
+
+)}
+
+{marketData.labels.length > 0 && (
+  <div className='mt-8'>
+    <Card className="bg-gray-800 text-white">
+      <CardHeader>
+        <CardTitle className="text-lg text-gray-100">Market Data</CardTitle>
+      </CardHeader>
+      <CardContent className="bg-gray-900 p-6 rounded-lg">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-gray-800 p-4 rounded-lg">
+            <BarChart data={marketData} />
+          </div>
+          <div className="bg-gray-800 p-4 rounded-lg">
+            <PieChart data={marketData} />
+          </div>
+          <div className="bg-gray-800 p-4 rounded-lg">
+            <LineChart data={marketData} />
+          </div>
+          <div className="bg-gray-800 p-4 rounded-lg">
+            <RadarChart data={marketData} />
+          </div>
         </div>
-      )}
+      </CardContent>
+    </Card>
+  </div>
+)}
+
     </div>
   );
 }
