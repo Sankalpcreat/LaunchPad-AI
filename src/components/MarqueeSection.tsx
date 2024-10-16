@@ -2,45 +2,48 @@
 import { cn } from "@/lib/utils";
 import Marquee from "@/components/ui/marquee";
 import { useState } from "react";
+import Image from 'next/image';
 
 const reviews = [
   {
-    name: "Jack",
-    username: "@jack",
-    body: "I've never seen anything like this before. It's amazing. I love it.",
-    img: "https://avatar.vercel.sh/jack",
+    name: "Alice",
+    username: "@alice",
+    body: "LaunchPad AI has transformed the way I approach startup pitches. It's incredibly intuitive and helpful!",
+    img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    name: "Jill",
-    username: "@jill",
-    body: "I don't know what to say. I'm speechless. This is amazing.",
-    img: "https://avatar.vercel.sh/jill",
+    name: "Bob",
+    username: "@bob",
+    body: "The AI-generated pitches are top-notch! My presentations have never been so engaging and clear.",
+    img: "https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    name: "John",
-    username: "@john",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/john",
+    name: "Charlie",
+    username: "@charlie",
+    body: "I love how LaunchPad AI helps me visualize my ideas. It's like having a personal design assistant!",
+    img: "https://images.unsplash.com/photo-1480455624313-e29b44bbfde1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    name: "Jane",
-    username: "@jane",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/jane",
+    name: "Diana",
+    username: "@diana",
+    body: "This tool is a game-changer for entrepreneurs. It saves me so much time and effort in creating pitches.",
+    img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    name: "Jenny",
-    username: "@jenny",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/jenny",
+    name: "Ethan",
+    username: "@ethan",
+    body: "LaunchPad AI is incredibly user-friendly and has helped me craft compelling pitches that stand out.",
+    img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    name: "James",
-    username: "@james",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/james",
+    name: "Fiona",
+    username: "@fiona",
+    body: "I can't believe how much easier my pitch preparation has become. Highly recommend LaunchPad AI!",
+    img: "https://images.unsplash.com/photo-1496345875659-11f7dd282d1d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
 ];
+
+
 
 const firstRow = reviews.slice(0, reviews.length / 2);
 const secondRow = reviews.slice(reviews.length / 2);
@@ -69,7 +72,14 @@ const ReviewCard = ({
       onMouseLeave={() => setHovered(false)}
     >
       <div className="flex flex-row items-center gap-2">
-        <img className="rounded-full" width="32" height="32" alt="" src={img} />
+      <Image
+  className="rounded-full"
+  width={32} // Specify the width
+  height={32} // Specify the height
+  alt={`${name}'s avatar`} // Providing a meaningful alt attribute
+  src={img} // Ensure img has a valid URL
+  priority // Optional: Use for critical images to load them faster
+/>
         <div className="flex flex-col">
           <figcaption className="text-sm font-medium text-white">
             {name}

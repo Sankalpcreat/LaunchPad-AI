@@ -8,7 +8,6 @@ import Textarea from '@/components/ui/textarea';
 import Label from '@/components/ui/label';
 import Card, { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import Alert, { AlertDescription, AlertTitle } from '@/components/ui/alert';
-
 import { Loader2, AlertCircle } from 'lucide-react';
 import BarChart from '@/components/BarChart'
 import PieChart from '@/components/PieChart'
@@ -66,7 +65,10 @@ export default function GeneratePitchPage() {
   };
 
   return (
+    
+  
     <div className="container mx-auto py-8">
+      
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle>Generate Your Startup Pitch</CardTitle>
@@ -195,5 +197,6 @@ export default function GeneratePitchPage() {
 )}
 
     </div>
+    
   );
 }

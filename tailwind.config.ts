@@ -57,6 +57,7 @@ const config: Config = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		keyframes: {
+			
   			marquee: {
   				from: {
   					transform: 'translateX(0)'
@@ -83,12 +84,16 @@ const config: Config = {
   				to: {
   					'background-position': '0% 0%'
   				}
-  			}
+  			},
+			
+
   		},
   		animation: {
   			marquee: 'marquee var(--duration) infinite linear',
   			'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
-  			shine: 'shine var(--duration) infinite linear'
+  			shine: 'shine var(--duration) infinite linear',
+	
+
   		}
   	}
   },

@@ -1,7 +1,6 @@
-// src/components/ui/accordion.tsx
-
 import { ReactNode, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDownIcon } from "@heroicons/react/24/solid"; // Import the ChevronDownIcon
 
 interface AccordionItemProps {
   title: string;
@@ -47,7 +46,7 @@ export const AccordionTrigger = ({ title, isOpen, onClick }: AccordionTriggerPro
       className="flex justify-between items-center w-full py-4 text-left focus:outline-none"
     >
       <span className="text-xl font-semibold">{title}</span>
-      <span className="text-2xl">{isOpen ? "−" : "+"}</span>
+      <ChevronDownIcon className={`h-5 w-5 text-purple-500 transform ${isOpen ? "rotate-180" : ""}`} />
     </button>
   );
 };
@@ -65,5 +64,5 @@ interface AccordionProps {
 }
 
 export const Accordion = ({ children }: AccordionProps) => {
-  return <div className="bg-zinc-800 rounded-lg">{children}</div>;
+  return <div className=" rounded-lg">{children}</div>;
 };

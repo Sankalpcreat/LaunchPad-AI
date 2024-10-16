@@ -1,31 +1,26 @@
-// src/components/FAQ.tsx
-
 import { Accordion, AccordionItem } from "@/components/ui/accordion";
 
 const faqs = [
   {
-    question: "How does the AI generate designs?",
-    answer: "Our AI uses advanced machine learning algorithms trained on vast datasets of design principles and trends. It analyzes your input, considers current design standards, and generates unique designs tailored to your specifications."
+    question: "How does LaunchPad AI generate startup pitches?",
+    answer: "LaunchPad AI leverages advanced algorithms trained on extensive datasets, allowing it to analyze input and generate tailored startup pitches based on current market trends and best practices."
   },
   {
-    question: "Can I customize the AI-generated designs?",
-    answer: "While our AI creates initial designs, you have full control to modify and refine them. Our intuitive interface allows you to adjust colors, layouts, and elements to perfectly match your vision."
+    question: "Can I customize the AI-generated pitches?",
+    answer: "Absolutely! You can easily modify the generated pitches, adjusting content, style, and structure to align with your vision and requirements."
   },
   {
-    question: "What support options are available?",
-    answer: "We offer 24/7 customer support via chat and email. For our premium users, we also provide dedicated phone support and one-on-one consultation sessions with our design experts."
+    question: "What support options are available for users?",
+    answer: "We provide comprehensive support through live chat and email. Premium users have access to dedicated phone support and personalized consultation with our pitch experts."
+  },
+ 
+  {
+    question: "How secure is my data while using LaunchPad AI?",
+    answer: "Your data security is our top priority. We utilize industry-standard encryption and regularly perform audits to ensure your information remains secure."
   },
   {
-    question: "Is there a free trial available?",
-    answer: "Yes, we offer a 14-day free trial that gives you full access to all our features. This allows you to experience the power of our AI-driven design tools before committing to a subscription."
-  },
-  {
-    question: "How secure is my data?",
-    answer: "We take data security very seriously. All your data is encrypted both in transit and at rest. We use industry-standard security protocols and regularly undergo third-party security audits to ensure your information is always protected."
-  },
-  {
-    question: "What integrations are available?",
-    answer: "Our platform integrates seamlessly with popular design tools like Adobe Creative Suite, Figma, and Sketch. We also offer API access for custom integrations with your existing workflows and systems."
+    question: "What integrations does LaunchPad AI support?",
+    answer: "LaunchPad AI integrates seamlessly with popular tools and platforms, allowing for a smooth workflow. You can also use our API for custom integrations."
   }
 ];
 

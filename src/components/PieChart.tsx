@@ -1,7 +1,17 @@
 import React from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const CustomPieChart = ({ data }) => {
+// Define the structure of the data prop
+interface ChartData {
+  labels: string[];
+  values: number[];
+}
+
+interface CustomPieChartProps {
+  data: ChartData;
+}
+
+const CustomPieChart: React.FC<CustomPieChartProps> = ({ data }) => {
   const chartData = data.labels.map((label, index) => ({
     name: label,
     value: data.values[index],

@@ -64,10 +64,15 @@ const generatePitch = async (input: {
         },
       ],
     });
+  
+    if (!response.choices || response.choices.length === 0) {
+      throw new Error("No valid choices returned from OpenAI API.");
+    }
+    const generatedPitch = response.choices[0].message?.content?.trim() || '';
 
-
-    const generatedPitch = response.choices[0].message.content.trim();
-
+    if (!generatedPitch) {
+      throw new Error("Generated pitch is empty.");
+    }
     // Extract TAM, SAM, and SOM from the AI response
     const marketDataFromAI = extractMarketData(generatedPitch);
 
@@ -99,7 +104,7 @@ function extractMarketData(pitchText: string): { labels: string[], values: numbe
   console.log("Extracting market data from pitch text:", pitchText); 
 
   // Extract the JSON part from the pitch text
-  const jsonMatch = pitchText.match(/({.*?})/s);
+  const jsonMatch = pitchText.match(/{[^]*?}/);
   if (!jsonMatch) {
     return { labels: ['TAM', 'SAM', 'SOM'], values: [0, 0, 0] }; // Return zeros if no match
   }

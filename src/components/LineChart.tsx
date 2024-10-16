@@ -1,7 +1,17 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const CustomLineChart = ({ data }) => {
+// Define the structure of the data prop
+interface ChartData {
+  labels: string[];
+  values: number[];
+}
+
+interface CustomLineChartProps {
+  data: ChartData;
+}
+
+const CustomLineChart: React.FC<CustomLineChartProps> = ({ data }) => {
   const chartData = data.labels.map((label, index) => ({
     name: label,
     value: data.values[index],

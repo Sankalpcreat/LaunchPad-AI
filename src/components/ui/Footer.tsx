@@ -5,7 +5,7 @@
 import { Button } from "@/components/ui/button2"
 import { Input } from "@/components/ui/input1"
 import { motion } from "framer-motion"
-import { Facebook, Twitter, Instagram, Linkedin, Github } from "lucide-react"
+import {   Instagram, Linkedin, Github } from "lucide-react"
 import Image from "next/image"
 
 const fadeInUp = {
@@ -36,7 +36,7 @@ export default function Footer() {  // This is a default export
       alt="LaunchPad AI Logo"
       width={40}  // You can adjust these values
       height={32}  // to the desired size
-      className="rounded-md"
+      className="rounded-md "
     />
             <span className="text-xl font-bold">LaunchpadAI</span>
           </div>
@@ -44,15 +44,21 @@ export default function Footer() {  // This is a default export
             Empowering creativity with AI-driven design solutions.
           </p>
           <div className="flex space-x-4">
-            <Facebook className="w-5 h-5 text-zinc-400 hover:text-purple-500 cursor-pointer transition-colors" />
-            <Twitter className="w-5 h-5 text-zinc-400 hover:text-purple-500 cursor-pointer transition-colors" />
+            
+          <Image
+        src="/twitter.jpg"  // Replace with your image path
+        alt="Description of image"
+        width={25}  // Desired width
+        height={20}  // Desired height
+        className="custom-class pb-10  hover:text-purple-500 cursor-pointer transition-colors  text-zinc-400"  // Optional: Add custom styles or Tailwind classes
+      />
             <Instagram className="w-5 h-5 text-zinc-400 hover:text-purple-500 cursor-pointer transition-colors" />
             <Linkedin className="w-5 h-5 text-zinc-400 hover:text-purple-500 cursor-pointer transition-colors" />
             <Github className="w-5 h-5 text-zinc-400 hover:text-purple-500 cursor-pointer transition-colors" />
           </div>
         </motion.div>
         <motion.div variants={fadeInUp}>
-          <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
+          <h3 className="font-semibold text-lg mb-4 ml-4">Quick Links</h3>
           <ul className="space-y-2">
             <li><Button variant="link" className="text-zinc-300 hover:text-purple-400 p-0">How it Works</Button></li>
             <li><Button variant="link" className="text-zinc-300 hover:text-purple-400 p-0">Features</Button></li>
@@ -62,7 +68,7 @@ export default function Footer() {  // This is a default export
           </ul>
         </motion.div>
         <motion.div variants={fadeInUp}>
-          <h3 className="font-semibold text-lg mb-4">Legal</h3>
+          <h3 className="font-semibold text-lg mb-4 ml-4">Legal</h3>
           <ul className="space-y-2">
             <li><Button variant="link" className="text-zinc-300 hover:text-purple-400 p-0">Terms of Service</Button></li>
             <li><Button variant="link" className="text-zinc-300 hover:text-purple-400 p-0">Privacy Policy</Button></li>
@@ -87,7 +93,7 @@ export default function Footer() {  // This is a default export
         className="mt-1 pt-8 border-t border-zinc-800 text-center text-zinc-400 text-sm"
       >
         <p>© 2024 LaunchpadAI. All rights reserved.</p>
-        <p className="mt-2">Made with ❤️ by the LaunchpadAI team</p>
+        <p className="mt-2">Made by Sankalp</p>
       </motion.div>
     </motion.footer>
   )

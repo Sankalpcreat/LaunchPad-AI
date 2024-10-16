@@ -1,7 +1,17 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const CustomBarChart = ({ data }) => {
+// Define the structure of the data prop
+interface ChartData {
+  labels: string[];
+  values: number[];
+}
+
+interface CustomBarChartProps {
+  data: ChartData;
+}
+
+const CustomBarChart: React.FC<CustomBarChartProps> = ({ data }) => {
   const chartData = data.labels.map((label, index) => ({
     name: label,
     value: data.values[index],
@@ -14,7 +24,6 @@ const CustomBarChart = ({ data }) => {
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip contentStyle={{ backgroundColor: '#222', border: 'none', color: '#fff' }} />
-
         <Legend />
         <Bar dataKey="value" fill="url(#colorUv)" />
         <defs>

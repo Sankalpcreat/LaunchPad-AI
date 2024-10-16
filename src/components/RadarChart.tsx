@@ -1,7 +1,17 @@
 import React from 'react';
 import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Tooltip, ResponsiveContainer } from 'recharts';
 
-const CustomRadarChart = ({ data }) => {
+// Define the structure of the data prop
+interface ChartData {
+  labels: string[];
+  values: number[];
+}
+
+interface CustomRadarChartProps {
+  data: ChartData;
+}
+
+const CustomRadarChart: React.FC<CustomRadarChartProps> = ({ data }) => {
   const chartData = data.labels.map((label, index) => ({
     subject: label,
     A: data.values[index],

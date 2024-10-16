@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Error generating pitch:", error);
     return NextResponse.json(
-      { message: "Failed to generate pitch", error: error.message },
+      { message: "Failed to generate pitch"},
       { status: 500 }
     );
   }
