@@ -1,12 +1,8 @@
-import connectDB from "@/utils/connectDB"; 
 import { OpenAI } from "openai";
-import PitchGenerator from "../models/PitchGenerator";
-
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
-
 
 const generatePitch = async (input: {
   startupName: string;
@@ -14,11 +10,7 @@ const generatePitch = async (input: {
   productDetails: string;
   targetMarket?: string;
 }) => {
-  
-  await connectDB(); 
-
   try {
-
     const prompt = `
     Please generate a comprehensive startup pitch based on the following information:
 
@@ -53,7 +45,6 @@ const generatePitch = async (input: {
     }
     `;
    
-
     // Make the request to the OpenAI API
     const response = await openai.chat.completions.create({
       model: "gpt-4",
@@ -64,50 +55,37 @@ const generatePitch = async (input: {
         },
       ],
     });
-  
+
     if (!response.choices || response.choices.length === 0) {
       throw new Error("No valid choices returned from OpenAI API.");
     }
+    
     const generatedPitch = response.choices[0].message?.content?.trim() || '';
 
     if (!generatedPitch) {
       throw new Error("Generated pitch is empty.");
     }
+
     // Extract TAM, SAM, and SOM from the AI response
     const marketDataFromAI = extractMarketData(generatedPitch);
 
-    // Prepare pitch data to save in the database
-    const pitchData = {
+    return {
       startupName: input.startupName,
       missionStatement: input.missionStatement,
       productDetails: input.productDetails,
       targetMarket: input.targetMarket,
       pitchText: generatedPitch,
-      pitchType: "general", 
-      marketData: marketDataFromAI, 
+      marketData: marketDataFromAI,
     };
 
-    
-    try {
-      const newPitch =  new PitchGenerator(pitchData);
-      await newPitch.save();
-      console.log("Pitch saved successfully:", newPitch);
-      return newPitch;
-    } catch (error) {
-      console.error("Error saving pitch to the database:", error);
-      throw new Error("Failed to save pitch to the database");
-    }
   } catch (error) {
     console.error("Error in generating the pitch", error);
     throw new Error("Failed to generate pitch");
   }
 };
 
-
 // Helper function to extract TAM, SAM, and SOM from pitch text
 function extractMarketData(pitchText: string): { labels: string[], values: number[] } {
-  console.log("Extracting market data from pitch text:", pitchText); 
-
   // Extract the JSON part from the pitch text
   const jsonMatch = pitchText.match(/{[^]*?}/);
   if (!jsonMatch) {
@@ -131,4 +109,4 @@ function parseNumberFromString(value: string): number {
   return parseFloat(value.replace(/[^0-9.]/g, '')); // Removes currency symbols and other non-numeric characters
 }
 
-export default generatePitch; 
+export default generatePitch;
