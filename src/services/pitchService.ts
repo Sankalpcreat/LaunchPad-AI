@@ -83,13 +83,13 @@ const generatePitch = async (input: {
       productDetails: input.productDetails,
       targetMarket: input.targetMarket,
       pitchText: generatedPitch,
-      pitchType: "general", // Assuming a general pitch type
-      marketData: marketDataFromAI, // TAM, SAM, SOM values
+      pitchType: "general", 
+      marketData: marketDataFromAI, 
     };
 
-    // Save pitch data to the database
+    
     try {
-      const newPitch = new PitchGenerator(pitchData);
+      const newPitch =  new PitchGenerator(pitchData);
       await newPitch.save();
       console.log("Pitch saved successfully:", newPitch);
       return newPitch;
