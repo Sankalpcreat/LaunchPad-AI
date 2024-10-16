@@ -88,10 +88,15 @@ const generatePitch = async (input: {
     };
 
     // Save pitch data to the database
-    const newPitch = new PitchGenerator(pitchData);
-    await newPitch.save();
-
-    return newPitch;
+    try {
+      const newPitch = new PitchGenerator(pitchData);
+      await newPitch.save();
+      console.log("Pitch saved successfully:", newPitch);
+      return newPitch;
+    } catch (error) {
+      console.error("Error saving pitch to the database:", error);
+      throw new Error("Failed to save pitch to the database");
+    }
   } catch (error) {
     console.error("Error in generating the pitch", error);
     throw new Error("Failed to generate pitch");

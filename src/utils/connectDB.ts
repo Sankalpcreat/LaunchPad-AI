@@ -12,14 +12,14 @@ if (!MONGODB_URI) {
 
 async function connectDB() {
   try {
-    // Ensure MONGODB_URI is a string here
+  
     await mongoose.connect(MONGODB_URI as string)
     
     console.log("MongoDB connected successfully.");
   } catch (error) {
     console.error("MongoDB connection error:", error);
-    throw error; // Rethrow the error if needed
+    throw error; 
   }
 }
 
-export default connectDB; // Export the connectDB function
+export default connectDB;

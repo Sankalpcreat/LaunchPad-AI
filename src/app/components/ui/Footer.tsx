@@ -2,8 +2,8 @@
 
 'use client'
 
-import { Button } from "@/components/ui/button2"
-import { Input } from "@/components/ui/input1"
+import { Button } from "./button2"
+import { Input } from "./input1"
 import { motion } from "framer-motion"
 import {   Instagram, Linkedin, Github } from "lucide-react"
 import Image from "next/image"

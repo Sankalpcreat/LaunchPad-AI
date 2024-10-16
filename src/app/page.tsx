@@ -1,21 +1,21 @@
 'use client'
 
-import { Button } from "@/components/ui/Button1"
-import { Card, CardContent } from "@/components/ui/Card1"
+import { Button } from "./components/ui/Button1"
+import { Card, CardContent } from "./components/ui/Card1"
 
 import { ArrowUpRight } from "lucide-react"
 import { motion } from "framer-motion"
 
-import FAQ from "@/components/FAQ";
+import FAQ from "./components/FAQ";
 import { useRouter } from "next/navigation"
-import Footer from "@/components/ui/Footer"
+import Footer from "./components/ui/Footer"
 import Image from "next/image"; 
-import { AnimatedBeamMultipleOutputDemo } from "@/components/animatedBeam" 
+import { AnimatedBeamMultipleOutputDemo } from "./components/animatedBeam" 
  
 
-import BoxReveal from "@/components/ui/box-reveal"
-import { MarqueeSection } from "@/components/MarqueeSection"; 
-import {FloatingNav} from "@/components/ui/floating-navbar"; 
+import BoxReveal from "./components/ui/box-reveal"
+import { MarqueeSection } from "./components/MarqueeSection"; 
+import {FloatingNav} from "./components/ui/floating-navbar"; 
 
 
 

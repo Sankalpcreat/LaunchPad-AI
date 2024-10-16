@@ -1,6 +1,6 @@
 // components/MarqueeSection.tsx
 import { cn } from "@/lib/utils";
-import Marquee from "@/components/ui/marquee";
+import Marquee from "../components/ui/marquee";
 import { useState } from "react";
 import Image from 'next/image';
 
