@@ -1,6 +1,6 @@
 import connectDB from "@/utils/connectDB"; 
 import { OpenAI } from "openai";
-import PitchGenerator from "@/models/PitchGenerator";
+import PitchGenerator from "@/models/PitchGenerator.ts";
 
 
 const openai = new OpenAI({
