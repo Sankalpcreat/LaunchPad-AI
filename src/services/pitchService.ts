@@ -44,69 +44,58 @@ const generatePitch = async (input: {
       "SOM": "SOM value"
     }
     `;
-   
-    // Make the request to the OpenAI API
+
     const response = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: 'gpt-4',
       messages: [
         {
-          role: "user",
+          role: 'user',
           content: prompt,
         },
       ],
+      stream: true,
+      temperature: 0.3,
     });
 
-    if (!response.choices || response.choices.length === 0) {
-      throw new Error("No valid choices returned from OpenAI API.");
+    let generatedPitch = '';
+    let marketData: { label: string[]; value: number[] } = { label: [], value: [] };
+
+    // Read the stream properly
+    for await (const message of response) {
+      if (message.choices && message.choices.length > 0) {
+        const chunk = message.choices[0].delta.content || '';
+        generatedPitch += chunk;
+      }
     }
-    
-    const generatedPitch = response.choices[0].message?.content?.trim() || '';
 
     if (!generatedPitch) {
-      throw new Error("Generated pitch is empty.");
+      throw new Error('Generated Pitch Empty');
     }
 
-    // Extract TAM, SAM, and SOM from the AI response
-    const marketDataFromAI = extractMarketData(generatedPitch);
+    // Extract market data from the generated pitch
+    marketData = extractMarketData(generatedPitch);
 
-    return {
-      startupName: input.startupName,
-      missionStatement: input.missionStatement,
-      productDetails: input.productDetails,
-      targetMarket: input.targetMarket,
-      pitchText: generatedPitch,
-      marketData: marketDataFromAI,
-    };
-
+    return { pitchText: generatedPitch, marketData };
   } catch (error) {
-    console.error("Error in generating the pitch", error);
-    throw new Error("Failed to generate pitch");
+    console.error('Error generating pitch:', error);
+    throw new Error('Failed to generate pitch');
   }
 };
 
-// Helper function to extract TAM, SAM, and SOM from pitch text
-function extractMarketData(pitchText: string): { labels: string[], values: number[] } {
-  // Extract the JSON part from the pitch text
-  const jsonMatch = pitchText.match(/{[^]*?}/);
-  if (!jsonMatch) {
-    return { labels: ['TAM', 'SAM', 'SOM'], values: [0, 0, 0] }; // Return zeros if no match
-  }
+// Updated extractMarketData function
+function extractMarketData(pitchText: string) {
+  // Basic extraction logic for TAM, SAM, and SOM values
+  const marketData = { label: ['TAM', 'SAM', 'SOM'], value: [0, 0, 0] };
 
-  const marketData = JSON.parse(jsonMatch[0]);
-  
-  const tam = parseNumberFromString(marketData.TAM);
-  const sam = parseNumberFromString(marketData.SAM);
-  const som = parseNumberFromString(marketData.SOM);
+  const tamMatch = pitchText.match(/"TAM":\s*"(\d+(?:\.\d+)?)"/);
+  const samMatch = pitchText.match(/"SAM":\s*"(\d+(?:\.\d+)?)"/);
+  const somMatch = pitchText.match(/"SOM":\s*"(\d+(?:\.\d+)?)"/);
 
-  return {
-    labels: ['TAM', 'SAM', 'SOM'],
-    values: [tam, sam, som],
-  };
-}
+  if (tamMatch) marketData.value[0] = parseFloat(tamMatch[1]);
+  if (samMatch) marketData.value[1] = parseFloat(samMatch[1]);
+  if (somMatch) marketData.value[2] = parseFloat(somMatch[1]);
 
-// Helper function to parse a string and convert it to a float number
-function parseNumberFromString(value: string): number {
-  return parseFloat(value.replace(/[^0-9.]/g, '')); // Removes currency symbols and other non-numeric characters
+  return marketData;
 }
 
 export default generatePitch;

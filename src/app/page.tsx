@@ -16,7 +16,7 @@ import { AnimatedBeamMultipleOutputDemo } from "./components/animatedBeam"
 import BoxReveal from "./components/ui/box-reveal"
 import { MarqueeSection } from "./components/MarqueeSection"; 
 import {FloatingNav} from "./components/ui/floating-navbar"; 
-
+import {HeroVideoDialogDemo} from "./components/HeroVideoDialogDemo";
 
 
 const fadeIn = {
@@ -108,15 +108,10 @@ export default function LandingPage() {
                 >
               
 
-              <div className="w-full h-80 relative">
-              <Image
-                  src="/image.jpeg" // Replace with your image path
-                  alt="AI Design Assistant"
-                  fill // Replaces layout="fill"
-                  style={{ objectFit: 'cover' }} // Replaces objectFit="cover"
-                  className="rounded-lg transition-transform duration-500 hover:scale-105" // Adding hover scale animation
-                />
-                  </div>
+              <div className="w-full max-w-md relative overflow-hidden aspect-[16/9]">
+  <HeroVideoDialogDemo />
+</div>
+
 
         </motion.div>
       </motion.section>

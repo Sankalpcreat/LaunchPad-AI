@@ -17,7 +17,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.5",
-    "framer-motion": "^11.11.9",
+    "framer-motion": "^11.11.11",
     "lucide": "^0.452.0",
     "lucide-react": "^0.452.0",
     "mongodb": "^6.9.0",

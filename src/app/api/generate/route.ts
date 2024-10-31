@@ -1,25 +1,17 @@
-import generatePitch from "@/services/pitchService";
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
+import generatePitch from '@/services/pitchService'; // Adjust the path as necessary
 
-export async function POST(req: Request) {
- 
+export async function POST(request: Request) {
+  const body = await request.json();
   
   try {
-    const input = await req.json();
-   
+    // Call the generatePitch function
+    const { pitchText, marketData } = await generatePitch(body);
 
-    const pitch = await generatePitch(input);
-  
-
-    return NextResponse.json(
-      { message: "Pitch Generated Successfully", pitch , marketData: pitch.marketData},
-      { status: 201 }
-    );
+    // Return the response in the expected format
+    return NextResponse.json({ pitchText, marketData });
   } catch (error) {
-    console.error("Error generating pitch:", error);
-    return NextResponse.json(
-      { message: "Failed to generate pitch"},
-      { status: 500 }
-    );
+    console.error('Error in pitch generation:', error);
+    return NextResponse.json({ error: 'Failed to generate pitch' }, { status: 500 });
   }
 }

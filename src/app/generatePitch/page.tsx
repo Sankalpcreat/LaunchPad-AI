@@ -9,10 +9,10 @@ import Label from '../components/ui/label';
 import Card, { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../components/ui/card';
 import Alert, { AlertDescription, AlertTitle } from '../components/ui/alert';
 import { Loader2, AlertCircle } from 'lucide-react';
-import BarChart from '../components/BarChart'
-import PieChart from '../components/PieChart'
-import LineChart from '../components/LineChart'
-import RadarChart from '../components/RadarChart'
+import BarChart from '../components/BarChart';
+import PieChart from '../components/PieChart';
+import LineChart from '../components/LineChart';
+import RadarChart from '../components/RadarChart';
 
 export default function GeneratePitchPage() {
   const [startupName, setStartupName] = useState('');
@@ -40,10 +40,24 @@ export default function GeneratePitchPage() {
 
     try {
       const response = await axios.post('/api/generate', inputData);
-      console.log('API response:', response.data);
 
-      setGeneratedPitch(response.data.pitch.pitchText);
-      setMarketData(response.data.pitch.marketData);
+      // Check if response contains the generated pitch and market data
+      const { pitchText, marketData: data } = response.data;
+
+      // Check if pitchText is defined and is a string before streaming
+      if (typeof pitchText === 'string') {
+        streamPitch(pitchText); // Stream the received pitch
+      } else {
+        throw new Error('Generated pitch is not a valid string.');
+      }
+
+      // Set market data for visualization
+      if (data) {
+        setMarketData(data);
+      } else {
+        console.warn('No market data received.');
+      }
+
     } catch (err) {
       console.error('Error in API call:', err);
       setError('Failed to generate the pitch. Please try again.');
@@ -52,23 +66,35 @@ export default function GeneratePitchPage() {
     }
   };
 
+  const streamPitch = (text: string) => {
+    // Split the text into individual words
+    const words = text.split(' ');
+    let index = 0;
+
+    const intervalId = setInterval(() => {
+      if (index < words.length) {
+        setGeneratedPitch((prev) => prev + words[index] + ' '); // Append the current word
+        index++;
+      } else {
+        clearInterval(intervalId); // Stop the interval when done
+      }
+    }, 200); // Adjust the speed of the streaming here (200ms per word)
+  };
+
   const handleDownloadText = () => {
-    if (!generatedPitch) return; // Do nothing if there's no pitch
+    if (!generatedPitch) return;
 
     const element = document.createElement('a');
     const file = new Blob([generatedPitch], { type: 'text/plain' });
     element.href = URL.createObjectURL(file);
-    element.download = 'generated_pitch.txt'; // File name for the download
+    element.download = 'generated_pitch.txt';
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
   };
 
   return (
-    
-  
     <div className="container mx-auto py-8">
-      
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle>Generate Your Startup Pitch</CardTitle>
@@ -121,23 +147,22 @@ export default function GeneratePitchPage() {
           </form>
         </CardContent>
         <CardFooter className="flex space-x-2">
-        <Button 
-  onClick={handleSubmit} 
-  disabled={loading} 
-  className={`w-full px-4 py-2 text-lg font-semibold text-white rounded-lg 
-  ${loading ? 'bg-gray-700' : 'bg-gradient-to-r from-black to-gray-900'} 
-  hover:bg-gray-800 focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all ease-in-out duration-300`}
->
-  {loading ? (
-    <>
-      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-      Generating...
-    </>
-  ) : (
-    'Generate Pitch'
-  )}
-</Button>
-
+          <Button 
+            onClick={handleSubmit} 
+            disabled={loading} 
+            className={`w-full px-4 py-2 text-lg font-semibold text-white rounded-lg 
+            ${loading ? 'bg-gray-700' : 'bg-gradient-to-r from-black to-gray-900'} 
+            hover:bg-gray-800 focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all ease-in-out duration-300`}
+          >
+            {loading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Generating...
+              </>
+            ) : (
+              'Generate Pitch'
+            )}
+          </Button>
         </CardFooter>
       </Card>
 
@@ -149,54 +174,50 @@ export default function GeneratePitchPage() {
         </Alert>
       )}
 
-{generatedPitch && (
-  <Card className="mt-8 bg-gray-800 text-white">
-  <CardHeader className="flex justify-between items-center">
-    <div className="flex items-center space-x-4">
-      <CardTitle>Generated Pitch</CardTitle>
-      <Button 
-        onClick={handleDownloadText} 
-        className="bg-black text-white hover:bg-gray-800 px-4 py-1 text-sm"
-      >
-        Download
-      </Button>
-    </div>
-  </CardHeader>
-  <CardContent className="p-4 bg-gray-800 rounded-lg">
-    <p className="text-base text-white whitespace-pre-wrap">{generatedPitch}</p>
-  </CardContent>
-</Card>
+      {generatedPitch && (
+        <Card className="mt-8 bg-gray-800 text-white">
+          <CardHeader className="flex justify-between items-center">
+            <div className="flex items-center space-x-4">
+              <CardTitle>Generated Pitch</CardTitle>
+              <Button 
+                onClick={handleDownloadText} 
+                className="bg-black text-white hover:bg-gray-800 px-4 py-1 text-sm"
+              >
+                Download
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent className="p-4 bg-gray-800 rounded-lg">
+            <pre className="text-base text-white whitespace-pre-wrap">{generatedPitch}</pre>
+          </CardContent>
+        </Card>
+      )}
 
-
-)}
-
-{marketData.labels.length > 0 && (
-  <div className='mt-8'>
-    <Card className="bg-gray-800 text-white">
-      <CardHeader>
-        <CardTitle className="text-lg text-gray-100">Market Data</CardTitle>
-      </CardHeader>
-      <CardContent className="bg-gray-900 p-6 rounded-lg">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-gray-800 p-4 rounded-lg">
-            <BarChart data={marketData} />
-          </div>
-          <div className="bg-gray-800 p-4 rounded-lg">
-            <PieChart data={marketData} />
-          </div>
-          <div className="bg-gray-800 p-4 rounded-lg">
-            <LineChart data={marketData} />
-          </div>
-          <div className="bg-gray-800 p-4 rounded-lg">
-            <RadarChart data={marketData} />
-          </div>
+      {marketData?.labels?.length > 0 && (
+        <div className='mt-8'>
+          <Card className="bg-gray-800 text-white">
+            <CardHeader>
+              <CardTitle className="text-lg text-gray-100">Market Data</CardTitle>
+            </CardHeader>
+            <CardContent className="bg-gray-900 p-6 rounded-lg">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-gray-800 p-4 rounded-lg">
+                  <BarChart data={marketData} />
+                </div>
+                <div className="bg-gray-800 p-4 rounded-lg">
+                  <PieChart data={marketData} />
+                </div>
+                <div className="bg-gray-800 p-4 rounded-lg">
+                  <LineChart data={marketData} />
+                </div>
+                <div className="bg-gray-800 p-4 rounded-lg">
+                  <RadarChart data={marketData} />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
-      </CardContent>
-    </Card>
-  </div>
-)}
-
+      )}
     </div>
-    
   );
 }
